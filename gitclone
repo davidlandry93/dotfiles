@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+GITHUB_USERNAME=davidlandry93
+
+if [ -z "$1" ];
+then echo "usage: gitclone <name_of_repo>";
+else git clone git@github.com:$GITHUB_USERNAME/$1;
+fi
