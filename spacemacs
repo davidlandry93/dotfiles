@@ -28,6 +28,7 @@ values."
             c-c++-enable-clang-support t)
      (colors :variables
              colors-enable-nyan-cat-progress-bar t)
+     deft
      org
      python
      ranger
@@ -56,7 +57,8 @@ values."
 
 (defun dotspacemacs/init ()
   "Initialization function.
-This function is called at the very startup of Spacemacs initialization
+This functi      (when latex-enable-auto-fill
+on is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
@@ -130,6 +132,7 @@ executes.
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
 
+  (setq latex-enable-auto-fill nil)
   (global-set-key (kbd "C-+") 'zoom-frm-in)
   (global-set-key (kbd "C--") 'zoom-frm-out))
 
@@ -175,6 +178,9 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("\\.launch\\'" . nxml-mode))
   (add-to-list 'auto-mode-alist '("\\.cu\\'" . c++-mode))
   (add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
+
+  (setq deft-directory "~/insync/notes")
+  (setq deft-extensions '("md" "txt"))
 
   (setq-default helm-make-build-dir "build"))
 
