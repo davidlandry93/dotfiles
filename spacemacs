@@ -51,7 +51,8 @@ values."
                                       google-this
                                       oceanic-theme
                                       abyss-theme
-                                      blackboard-theme)
+                                      blackboard-theme
+                                      reykjavik-theme)
    dotspacemacs-excluded-packages '()
    dotspacemacs-delete-orphan-packages t))
 
@@ -73,6 +74,7 @@ values."
    dotspacemacs-startup-recent-list-size 10
    dotspacemacs-scratch-mode 'emacs-lisp-mode
    dotspacemacs-themes '(gotham
+                         reykjavik
                          abyss
                          dracula
                          lush
