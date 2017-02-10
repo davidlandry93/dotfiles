@@ -173,6 +173,7 @@ you should place your code here."
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)
   (evil-leader/set-key "om" 'toggle-frame-maximized)
+  (evil-leader/set-key "ow" 'define-word)
   (evil-leader/set-key "w1" 'delete-other-windows)
 
   (eval-after-load 'flycheck '(flycheck-package-setup))
