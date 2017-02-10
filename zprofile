@@ -10,7 +10,3 @@ add_to_ld_path "/usr/local/lib"
 add_to_ld_path "/usr/local/arrayfire/lib"
 add_to_ld_path "/usr/local/cuda/lib64"
 add_to_ld_path "/usr/local/cuda/nvvm/lib64"
-
-# Virtualenvwraper.
-# Don't forget to add a local "source <path-to-virtualenvwrapper.sh>"
-export WORKON_HOME="~/envs"
