@@ -86,11 +86,13 @@ values."
                          monokai
                          zenburn)
    dotspacemacs-colorize-cursor-according-to-state t
-   dotspacemacs-default-font '("Mononoki"
-                               :size 18
-                               :weight normal
-                               :width normal
-                               :powerline-scale 1.1)
+   dotspacemacs-default-font (if (boundp 'dl93-font)
+                                 dl93-font
+                               '("Mononoki"
+                                 :size 18
+                                 :weight normal
+                                 :width normal
+                                 :powerline-scale 1.1))
    dotspacemacs-leader-key "SPC"
    dotspacemacs-emacs-leader-key "M-m"
    dotspacemacs-major-mode-leader-key ","
