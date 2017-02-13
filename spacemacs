@@ -52,7 +52,8 @@ values."
                                       oceanic-theme
                                       abyss-theme
                                       blackboard-theme
-                                      reykjavik-theme)
+                                      reykjavik-theme
+                                      writeroom-mode)
    dotspacemacs-excluded-packages '()
    dotspacemacs-delete-orphan-packages t))
 
@@ -175,7 +176,8 @@ you should place your code here."
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)
   (evil-leader/set-key "om" 'toggle-frame-maximized)
-  (evil-leader/set-key "ow" 'define-word)
+  (evil-leader/set-key "od" 'define-word)
+  (evil-leader/set-key "ow" 'writeroom-mode)
   (evil-leader/set-key "w1" 'delete-other-windows)
 
   (eval-after-load 'flycheck '(flycheck-package-setup))
