@@ -2,5 +2,4 @@
 
 if [ -d $1 ] ; then
     export LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH"
-    echo "TOTOTO"
 fi

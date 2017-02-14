@@ -17,10 +17,7 @@ source $ZSH/oh-my-zsh.sh
 # Export encfs config
 export ENCFS6_CONFIG=~/insync/encfs6.xml
 
-
 # Load my custom functions
-
-fpath=( ~/repos/dotfiles "${fpath[@]}" )
 autoload gitclone
 autoload macd
 
