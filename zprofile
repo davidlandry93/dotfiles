@@ -1,16 +1,7 @@
 #!/usr/bin/env zsh
 
-function add_to_path {
-    if [ -d $1 ] ; then
-        export PATH="$1:$PATH"
-    fi
-}
-
-function add_to_ld_path {
-    if [ -d $1 ] ; then
-        export LD_LIBRARY_PATH="$1:$LD_LIBRARY_PATH"
-    fi
-}
+autoload add_to_path
+autoload add_to_ld_path
 
 # Library load path
 add_to_ld_path "/usr/local/arrayfire/lib"

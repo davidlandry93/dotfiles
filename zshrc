@@ -1,3 +1,6 @@
+#!/usr/bin/env zsh
+
+autoload add_to_path
 
 # Configure oh-my-zsh
 
@@ -11,7 +14,15 @@ plugins=(git)
 source $ZSH/oh-my-zsh.sh
 
 
+# Export encfs config
+export ENCFS6_CONFIG=~/insync/encfs6.xml
+
+
 # Load my custom functions
 
 fpath=( ~/repos/dotfiles "${fpath[@]}" )
 autoload gitclone
+autoload macd
+
+# Add local python functions to the path.
+add_to_path ~/.local/bin

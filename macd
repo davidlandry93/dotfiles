@@ -1,0 +1,26 @@
+#!/usr/bin/env zsh
+
+# ========
+# macd
+# mount amazon cloud drive
+# ========
+
+ACD_DIR="${HOME}/.amazon_enc"
+ENCFS_DIR="${HOME}/amazon"
+export ENCFS6_CONFIG="${HOME}/insync/encfs6.xml"
+
+[[ ! -d ${ACD_DIR} ]] && mkdir ${ACD_DIR}
+
+if [ "$(ls -A ${ACD_DIR})" ]; then
+    echo "${ACD_DIR} not empty. Already mounted?"
+    return 1
+fi
+
+if [ $(acd_cli mount ~/.amazon_enc) ]; then
+    echo "Failed to mount acd."
+    return 1
+fi
+
+[[ ! -d ${ENCFS_DIR} ]] && mkdir ${ENCFS_DIR}
+
+encfs ${ACD_DIR} ${ENCFS_DIR}
