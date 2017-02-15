@@ -15,3 +15,13 @@ references the file in the repo. For example you could have the following.
 
 # Local corrections...
 ```
+
+## Amazon Cloud Drive
+
+The `macd` script mounts the encrypted cloud drive automatically. The
+dependencies are
+
+- acd_cli (get the acdcli package from pip3)
+- encfs
+
+The encfs config file is in insync.
