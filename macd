@@ -5,9 +5,8 @@
 # mount amazon cloud drive
 # ========
 
-ACD_DIR="${HOME}/.amazon_enc"
+ACD_DIR="${HOME}/.amazon"
 ENCFS_DIR="${HOME}/amazon"
-export ENCFS6_CONFIG="${HOME}/insync/encfs6.xml"
 
 [[ ! -d ${ACD_DIR} ]] && mkdir ${ACD_DIR}
 
@@ -16,11 +15,11 @@ if [ "$(ls -A ${ACD_DIR})" ]; then
     return 1
 fi
 
-if [ $(acd_cli mount ~/.amazon_enc) ]; then
+if [ $(acd_cli mount ${ACD_DIR}) ]; then
     echo "Failed to mount acd."
     return 1
 fi
 
 [[ ! -d ${ENCFS_DIR} ]] && mkdir ${ENCFS_DIR}
 
-encfs ${ACD_DIR} ${ENCFS_DIR}
+encfs ${ACD_DIR}/enc ${ENCFS_DIR}
