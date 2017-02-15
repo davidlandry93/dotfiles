@@ -23,3 +23,9 @@ autoload macd
 
 # Add local python functions to the path.
 add_to_path ~/.local/bin
+
+# Source virtualenvwrapper if it exists.
+VIRTUALENVWRAPPER_DEFAULT_PATH=/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh
+if [[ -f ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH} ]]; then
+    source ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH}
+fi
