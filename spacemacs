@@ -151,6 +151,10 @@ you should place your code here."
 
   (load-file "~/insync/tokens.el")
 
+  (set-default 'truncate-lines t)
+
+
+  ;; C/C++ Config
   (add-hook 'c-mode-common-hook
             (progn
               (setq c-default-style
@@ -158,10 +162,13 @@ you should place your code here."
                     (awk-mode . "awk")
                     (other . "cc-mode")))
               (auto-complete-mode t)))
+  (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
 
+  (c-set-offset (quote cpp-macro) 0 nil)
+  (setq-default helm-make-build-dir "build")
+
+  ;; Markdown config
   (setq markdown-command "pandoc")
-
-  (set-default 'truncate-lines t)
 
   (defun dl93/pop-ielm ()
     (interactive)
@@ -187,9 +194,7 @@ you should place your code here."
   (add-to-list 'auto-mode-alist '("\\.cuh\\'" . c++-mode))
 
   (setq deft-directory "~/insync/notes")
-  (setq deft-extensions '("md" "txt"))
-
-  (setq-default helm-make-build-dir "build"))
+  (setq deft-extensions '("md" "txt")))
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
