@@ -29,3 +29,10 @@ VIRTUALENVWRAPPER_DEFAULT_PATH=/usr/share/virtualenvwrapper/virtualenvwrapper_la
 if [[ -f ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH} ]]; then
     source ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH}
 fi
+
+# Load ROS distros.
+# Ex. There could be a DL93_ROS_DISTROS = kinetic
+# in the local file.
+if [ ! -z ${DL93_ROS_DISTRO+x} ] ; then
+    source /opt/ros/${DISTRO}/setup.zsh
+fi
