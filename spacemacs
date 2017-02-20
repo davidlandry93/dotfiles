@@ -21,7 +21,9 @@ values."
      emacs-lisp
      git
      github
-     latex
+     (latex :variables
+            latex-build-command "LatexMk"
+            latex-enable-folding t)
      markdown
      (c-c++ :variables
             c-c++-default-mode-for-headers 'c++-mode
