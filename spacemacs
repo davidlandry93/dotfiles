@@ -169,6 +169,8 @@ you should place your code here."
   (c-set-offset (quote cpp-macro) 0 nil)
   (setq-default helm-make-build-dir "build")
 
+  (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
+
   ;; Markdown config
   (setq markdown-command "pandoc")
 
