@@ -155,6 +155,8 @@ you should place your code here."
 
   (set-default 'truncate-lines t)
 
+  (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
+
 
   ;; C/C++ Config
   (add-hook 'c-mode-common-hook
