@@ -46,7 +46,8 @@ values."
      xkcd
      yaml
      )
-   dotspacemacs-additional-packages '(gotham-theme
+   dotspacemacs-additional-packages '(dokuwiki
+                                      gotham-theme
                                       lush-theme
                                       dracula-theme
                                       flycheck-package
@@ -173,6 +174,7 @@ you should place your code here."
 
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
 
+
   ;; Markdown config
   (setq markdown-command "pandoc")
 
@@ -185,6 +187,10 @@ you should place your code here."
           (ielm))
       (switch-to-buffer-other-window "*ielm*"))
     (evil-insert 1))
+
+
+  ;; Python config
+  (setenv "WORKON_HOME" "~/envs/")
 
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)

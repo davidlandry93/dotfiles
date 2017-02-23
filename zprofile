@@ -9,7 +9,6 @@ autoload add_to_ld_path
 add_to_ld_path "/usr/local/arrayfire/lib"
 add_to_ld_path "/usr/local/cuda/lib64"
 add_to_ld_path "/usr/local/cuda/nvvm/lib64"
-add_to_ld_path "/usr/local/lib"
 
 # Path
 

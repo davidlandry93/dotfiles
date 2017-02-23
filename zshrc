@@ -1,6 +1,11 @@
 #!/usr/bin/env zsh
 
+# Load my custom functions
 autoload add_to_path
+autoload add_to_ld_path
+autoload cbcopy
+autoload gitclone
+autoload macd
 
 # Configure oh-my-zsh
 
@@ -17,9 +22,6 @@ source $ZSH/oh-my-zsh.sh
 # Export encfs config
 export ENCFS6_CONFIG=~/insync/encfs6.xml
 
-# Load my custom functions
-autoload gitclone
-autoload macd
 
 # Add local python functions to the path.
 add_to_path ~/.local/bin
@@ -31,8 +33,11 @@ if [[ -f ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH} ]]; the
 fi
 
 # Load ROS distros.
-# Ex. There could be a DL93_ROS_DISTROS = kinetic
+# Ex. There could be a DL93_ROS_DISTRO=kinetic
 # in the local file.
 if [ ! -z ${DL93_ROS_DISTRO+x} ] ; then
-    source /opt/ros/${DISTRO}/setup.zsh
+    source /opt/ros/${DL93_ROS_DISTRO}/setup.zsh
 fi
+
+# Library load path
+add_to_ld_path "/usr/local/lib"
