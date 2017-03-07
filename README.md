@@ -4,6 +4,9 @@
 My dotfiles and common scripts. They work with zsh and oh-my-zsh so you're gonna
 need those on your system.
 
+## Dependencies
+
+
 ## Integration
 
 A good way to integrate these in your system is to have a local `.zshrc` that 

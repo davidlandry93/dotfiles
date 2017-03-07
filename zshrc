@@ -18,10 +18,11 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+# Library load path
+add_to_ld_path "/usr/local/lib"
 
 # Export encfs config
 export ENCFS6_CONFIG=~/insync/encfs6.xml
-
 
 # Add local python functions to the path.
 add_to_path ~/.local/bin
@@ -39,5 +40,12 @@ if [ ! -z ${DL93_ROS_DISTRO+x} ] ; then
     source /opt/ros/${DL93_ROS_DISTRO}/setup.zsh
 fi
 
-# Library load path
-add_to_ld_path "/usr/local/lib"
+# PGI specific variables
+if [[ ${DL93_PGI_COMPILER} ]] ; then
+    export PGI=/opt/pgi
+    export MANPATH=/opt/pgi/linux86-64/16.10/man:$MANPATH
+    export LM_LICENSE_FILE=/opt/pgi/license.dat:$LM_LICENSE_FILE
+
+    add_to_path "/opt/pgi/linux86-64/16.10/bin"
+    add_to_ld_path "/opt/pgi/16.10/lib"
+fi
