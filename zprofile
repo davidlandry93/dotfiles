@@ -21,3 +21,5 @@ if [[ ${DL93_PGI_COMPILER} ]] ; then
     add_to_path "/opt/pgi/linux86-64/16.10/bin"
     add_to_ld_path "/opt/pgi/16.10/lib"
 fi
+
+export WORKON_HOME=~/.envs
