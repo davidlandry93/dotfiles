@@ -46,15 +46,16 @@ values."
      xkcd
      yaml
      )
-   dotspacemacs-additional-packages '(dokuwiki
-                                      gotham-theme
-                                      lush-theme
+   dotspacemacs-additional-packages '(
+                                      abyss-theme
+                                      blackboard-theme
+                                      dokuwiki
                                       dracula-theme
                                       flycheck-package
                                       google-this
+                                      gotham-theme
+                                      lush-theme
                                       oceanic-theme
-                                      abyss-theme
-                                      blackboard-theme
                                       reykjavik-theme
                                       writeroom-mode)
    dotspacemacs-excluded-packages '()
@@ -198,6 +199,9 @@ you should place your code here."
   (evil-leader/set-key "od" 'define-word)
   (evil-leader/set-key "ow" 'writeroom-mode)
   (evil-leader/set-key "w1" 'delete-other-windows)
+
+  (evil-leader/set-key "ok" 'move-text-line-up)
+  (evil-leader/set-key "oj" 'move-text-line-down)
 
   (eval-after-load 'flycheck '(flycheck-package-setup))
 
