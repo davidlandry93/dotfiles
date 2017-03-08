@@ -29,7 +29,7 @@ values."
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
      (colors :variables
-             colors-enable-nyan-cat-progress-bar t)
+             colors-enable-nyan-cat-progress-bar (not (boundp 'dl93-disable-nyan-cat)))
      deft
      org
      python
@@ -46,8 +46,7 @@ values."
      xkcd
      yaml
      )
-   dotspacemacs-additional-packages '(
-                                      abyss-theme
+   dotspacemacs-additional-packages '(abyss-theme
                                       blackboard-theme
                                       dokuwiki
                                       dracula-theme
@@ -63,8 +62,7 @@ values."
 
 (defun dotspacemacs/init ()
   "Initialization function.
-This functi      (when latex-enable-auto-fill
-on is called at the very startup of Spacemacs initialization
+This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
