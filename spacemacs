@@ -139,7 +139,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-
+  ;; Python config
   (setq latex-enable-auto-fill nil)
   (global-set-key (kbd "C-+") 'zoom-frm-in)
   (global-set-key (kbd "C--") 'zoom-frm-out))
@@ -189,8 +189,6 @@ you should place your code here."
     (evil-insert 1))
 
 
-  ;; Python config
-  (setenv "WORKON_HOME" "~/envs/")
 
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)
