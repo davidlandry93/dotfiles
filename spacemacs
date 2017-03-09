@@ -29,7 +29,7 @@ values."
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
      (colors :variables
-             colors-enable-nyan-cat-progress-bar t)
+             colors-enable-nyan-cat-progress-bar (not (boundp 'dl93-disable-nyan-cat)))
      deft
      org
      python
@@ -46,15 +46,15 @@ values."
      xkcd
      yaml
      )
-   dotspacemacs-additional-packages '(dokuwiki
-                                      gotham-theme
-                                      lush-theme
+   dotspacemacs-additional-packages '(abyss-theme
+                                      blackboard-theme
+                                      dokuwiki
                                       dracula-theme
                                       flycheck-package
                                       google-this
+                                      gotham-theme
+                                      lush-theme
                                       oceanic-theme
-                                      abyss-theme
-                                      blackboard-theme
                                       reykjavik-theme
                                       writeroom-mode)
    dotspacemacs-excluded-packages '()
@@ -62,8 +62,7 @@ values."
 
 (defun dotspacemacs/init ()
   "Initialization function.
-This functi      (when latex-enable-auto-fill
-on is called at the very startup of Spacemacs initialization
+This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
@@ -152,7 +151,9 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (load-file "~/insync/tokens.el")
+  (let ((token-file "~/insync/tokens.el"))
+    (when (file-readable-p  "~/insync/tokens.el")
+      (load-file token-file)))
 
   (set-default 'truncate-lines t)
 
@@ -196,6 +197,9 @@ you should place your code here."
   (evil-leader/set-key "od" 'define-word)
   (evil-leader/set-key "ow" 'writeroom-mode)
   (evil-leader/set-key "w1" 'delete-other-windows)
+
+  (evil-leader/set-key "ok" 'move-text-line-up)
+  (evil-leader/set-key "oj" 'move-text-line-down)
 
   (eval-after-load 'flycheck '(flycheck-package-setup))
 

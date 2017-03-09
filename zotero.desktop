@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Zotero
+GenericName=Bibliography manager
+MimeType=application/x-bibtex
+Exec=/opt/zotero/zotero
+Icon=/opt/zotero/chrome/icons/default/default48.png
+Type=Application
+Terminal=false
