@@ -29,7 +29,7 @@ values."
             c-c++-default-mode-for-headers 'c++-mode
             c-c++-enable-clang-support t)
      (colors :variables
-             colors-enable-nyan-cat-progress-bar t)
+             colors-enable-nyan-cat-progress-bar (not (boundp 'dl93-disable-nyan-cat)))
      deft
      org
      python
@@ -46,8 +46,7 @@ values."
      xkcd
      yaml
      )
-   dotspacemacs-additional-packages '(
-                                      abyss-theme
+   dotspacemacs-additional-packages '(abyss-theme
                                       blackboard-theme
                                       dokuwiki
                                       dracula-theme
@@ -139,7 +138,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-
+  ;; Python config
   (setq latex-enable-auto-fill nil)
   (global-set-key (kbd "C-+") 'zoom-frm-in)
   (global-set-key (kbd "C--") 'zoom-frm-out))
@@ -152,7 +151,9 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (load-file "~/insync/tokens.el")
+  (let ((token-file "~/insync/tokens.el"))
+    (when (file-readable-p  "~/insync/tokens.el")
+      (load-file token-file)))
 
   (set-default 'truncate-lines t)
 
@@ -197,8 +198,6 @@ you should place your code here."
     (evil-insert 1))
 
 
-  ;; Python config
-  (setenv "WORKON_HOME" "~/envs/")
 
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)

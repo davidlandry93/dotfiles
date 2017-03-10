@@ -8,7 +8,6 @@ autoload gitclone
 autoload macd
 
 # Configure oh-my-zsh
-
 export ZSH=~/.oh-my-zsh
 
 ZSH_THEME="afowler"
@@ -18,34 +17,8 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-# Library load path
-add_to_ld_path "/usr/local/lib"
-
-# Export encfs config
-export ENCFS6_CONFIG=~/insync/encfs6.xml
-
-# Add local python functions to the path.
-add_to_path ~/.local/bin
-
 # Source virtualenvwrapper if it exists.
 VIRTUALENVWRAPPER_DEFAULT_PATH=/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh
 if [[ -f ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH} ]]; then
     source ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH}
-fi
-
-# Load ROS distros.
-# Ex. There could be a DL93_ROS_DISTRO=kinetic
-# in the local file.
-if [ ! -z ${DL93_ROS_DISTRO+x} ] ; then
-    source /opt/ros/${DL93_ROS_DISTRO}/setup.zsh
-fi
-
-# PGI specific variables
-if [[ ${DL93_PGI_COMPILER} ]] ; then
-    export PGI=/opt/pgi
-    export MANPATH=/opt/pgi/linux86-64/16.10/man:$MANPATH
-    export LM_LICENSE_FILE=/opt/pgi/license.dat:$LM_LICENSE_FILE
-
-    add_to_path "/opt/pgi/linux86-64/16.10/bin"
-    add_to_ld_path "/opt/pgi/16.10/lib"
 fi
