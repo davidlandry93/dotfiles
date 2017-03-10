@@ -63,8 +63,7 @@ values."
 
 (defun dotspacemacs/init ()
   "Initialization function.
-This functi      (when latex-enable-auto-fill
-on is called at the very startup of Spacemacs initialization
+This function is called at the very startup of Spacemacs initialization
 before layers configuration.
 You should not put any user code in there besides modifying the variable
 values."
@@ -158,6 +157,14 @@ you should place your code here."
   (set-default 'truncate-lines t)
 
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
+
+  ;; Latex Config
+  (evil-leader/set-key-for-mode
+    'latex-mode
+    "ia"
+    (lambda ()
+      (interactive)
+      (LaTeX-insert-environment "align*")))
 
 
   ;; C/C++ Config
