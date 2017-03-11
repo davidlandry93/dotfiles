@@ -12,7 +12,8 @@ add_to_ld_path "/usr/local/cuda/lib64"
 add_to_ld_path "/usr/local/cuda/nvvm/lib64"
 
 # Add executables to path if available.
-add_to_path "~/.local/bin"
+add_to_path ~/.local/bin
+add_to_path ~/repos/dotfiles
 
 # For virtualenvwrapper
 export WORKON_HOME="~/.envs/"
