@@ -6,7 +6,7 @@ import sys
 
 FROM_EMAIL = 'davidlandry@outlook.com'
 TO_EMAIL = 'davidlandry93@gmail.com'
-PASSWORD_FILE_NAME = 'pass.txt'
+PASSWORD_FILE_NAME = '/home/david/.outlookpass'
 
 password = ''
 with open(PASSWORD_FILE_NAME) as f:
