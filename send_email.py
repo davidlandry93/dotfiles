@@ -17,13 +17,11 @@ if not password:
     print('Failed to recover password.', file=sys.stderr)
     sys.exit(1)
 
-subject = sys.argv[1]
-message = sys.argv[2]
 
-msg = MIMEText(message)
+msg = MIMEText(sys.argv[1] + sys.argv[2])
 msg['From'] = FROM_EMAIL
 msg['To'] = TO_EMAIL
-msg['Subject'] = subject
+msg['Subject'] = 'SMART Error on DRAKE'
 
 server = smtplib.SMTP('smtp-mail.outlook.com', 587)
 server.set_debuglevel(2)
