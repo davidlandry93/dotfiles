@@ -7,7 +7,7 @@ echo "Fetching server data into a temporary folder"
 rsync -av ovh:/opt/mscs/worlds/ tmp-backup/
 
 echo "Compressing server fetched data"
-tar -cJvf `date +'%Y-%m-%H-%M-%S'`.tar.xz tmp-backup
+tar -cJvf `date +'%Y-%m-%d-%H-%M-%S'`.tar.xz tmp-backup
 
 echo "Deleting temporary folder"
 rm -r tmp-backup
