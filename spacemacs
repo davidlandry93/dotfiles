@@ -180,21 +180,32 @@ you should place your code here."
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
 
   ;; Org-mode
+
+  ;; address an incompatibility between linum and org mode
+  (add-hook 'org-mode-hook (lambda() (linum-mode -1)))
+
+  (setq org-directory "~/insync/org")
   (setq org-catch-invisible-edits "show")
   (setq org-goto-interface "outline-path-completion")
-  (setq org-default-notes-file "~/insync/capture/desktop.org")
+  (setq org-default-notes-file "~/insync/org/capture-desktop.org")
   (setq org-agenda-files '("~/insync/org"))
-  (setq org-diary-files '("~/insync/w/diary.org" "~/insync/p/diary.org"))
+
+  (setq org-capture-templates
+        '(("i" "Idea" entry (file+headline "capture-desktop.org" "Ideas")
+           "* %? \nCaptured on %T")
+          ("t" "Task" entry (file+headline "capture-desktop.org" "Tasks")
+           "* TODO %? \nCaptured on %T")
+          ("l" "Activity log" entry (file+datetree "work-log.org")
+           "* %?\n")))
+
+  (setq org-refile-targets
+        '((nil :maxlevel . 9)
+          (org-agenda-files :maxlevel . 9)))
 
   (let ((insync-dir (concat "file:" (getenv "INSYNC") "/")))
     (setq org-link-abbrev-alist
           (list (cons "insync" insync-dir))))
 
-  (setq org-capture-templates
-        '(("i" "Idea" entry (file+headline "~/insync/capture/desktop.org" "Ideas")
-          "* %? \nCaptured on %T")
-          ("t" "Task" entry (file+headline "~/insync/capture/desktop.org" "Tasks")
-           "* TODO %? \nCaptured on %T")))
 
   ;; Markdown config
   (setq markdown-command "pandoc")
@@ -209,7 +220,12 @@ you should place your code here."
       (switch-to-buffer-other-window "*ielm*"))
     (evil-insert 1))
 
+  (defun dl93/find-dot-spacemacs ()
+    (interactive)
+    (let ((dot-spacemacs "~/repos/dotfiles/spacemacs"))
+      (find-file dot-spacemacs)))
 
+  (global-set-key (kbd "<f12>") 'dl93/find-dot-spacemacs)
 
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)
