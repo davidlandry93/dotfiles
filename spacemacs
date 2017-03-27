@@ -151,10 +151,6 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-  (let ((token-file "~/insync/tokens.el"))
-    (when (file-readable-p  "~/insync/tokens.el")
-      (load-file token-file)))
-
   (set-default 'truncate-lines t)
 
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
@@ -183,6 +179,22 @@ you should place your code here."
 
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
 
+  ;; Org-mode
+  (setq org-catch-invisible-edits "show")
+  (setq org-goto-interface "outline-path-completion")
+  (setq org-default-notes-file "~/insync/capture/desktop.org")
+  (setq org-agenda-files '("~/insync/org"))
+  (setq org-diary-files '("~/insync/w/diary.org" "~/insync/p/diary.org"))
+
+  (let ((insync-dir (concat "file:" (getenv "INSYNC") "/")))
+    (setq org-link-abbrev-alist
+          (list (cons "insync" insync-dir))))
+
+  (setq org-capture-templates
+        '(("i" "Idea" entry (file+headline "~/insync/capture/desktop.org" "Ideas")
+          "* %? \nCaptured on %T")
+          ("t" "Task" entry (file+headline "~/insync/capture/desktop.org" "Tasks")
+           "* TODO %? \nCaptured on %T")))
 
   ;; Markdown config
   (setq markdown-command "pandoc")

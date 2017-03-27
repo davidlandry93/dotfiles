@@ -2,6 +2,8 @@
 
 fpath=( ~/repos/dotfiles "${fpath[@]}" )
 
+export INSYNC=${HOME}/insync
+
 autoload add_to_path
 autoload add_to_ld_path
 
