@@ -54,7 +54,9 @@ values."
                                       google-this
                                       gotham-theme
                                       lush-theme
+                                      material-theme
                                       oceanic-theme
+                                      org-board
                                       reykjavik-theme
                                       writeroom-mode)
    dotspacemacs-excluded-packages '()
@@ -72,16 +74,16 @@ values."
    dotspacemacs-check-for-update t
    dotspacemacs-editing-style 'vim
    dotspacemacs-verbose-loading t
-   dotspacemacs-startup-banner nil
+   dotspacemacs-startup-banner 'official
    dotspacemacs-startup-lists '(recents projects bookmarks)
    dotspacemacs-startup-recent-list-size 10
    dotspacemacs-scratch-mode 'emacs-lisp-mode
-   dotspacemacs-themes '(gotham
+   dotspacemacs-themes '(dracula
+                         leuven
+                         gotham
                          reykjavik
                          abyss
-                         dracula
                          lush
-                         leuven
                          spacemacs-dark
                          spacemacs-light
                          solarized-light
@@ -184,11 +186,39 @@ you should place your code here."
   ;; address an incompatibility between linum and org mode
   (add-hook 'org-mode-hook (lambda() (linum-mode -1)))
 
-  (setq org-directory "~/insync/org")
+  ;; recursively find .org files in provided directory
+  ;; modified from an Emacs Lisp Intro example
+  (defun dl93/find-org-file-recursively (&optional directory filext)
+    "Return .org and .org_archive files recursively from DIRECTORY.
+    If FILEXT is provided, return files with extension FILEXT instead."
+    (interactive "DDirectory: ")
+    (let* (org-file-list
+           (case-fold-search t)	      ; filesystems are case sensitive
+           (file-name-regex "^[^.#].*") ; exclude dot, autosave, and backup files
+           (filext (or filext "org$\\\|org_archive"))
+           (fileregex (format "%s\\.\\(%s$\\)" file-name-regex filext))
+           (cur-dir-list (directory-files directory t file-name-regex)))
+      ;; loop over directory listing
+      (dolist (file-or-dir cur-dir-list org-file-list) ; returns org-file-list
+        (cond
+         ((file-regular-p file-or-dir) ; regular files
+          (if (string-match fileregex file-or-dir) ; org files
+              (add-to-list 'org-file-list file-or-dir)))
+         ((file-directory-p file-or-dir)
+          (dolist (org-file (dl93/find-org-file-recursively file-or-dir filext)
+                            org-file-list) ; add files found to result
+            (add-to-list 'org-file-list org-file)))))))
+
+  (setq org-directory "~/org")
   (setq org-catch-invisible-edits "show")
   (setq org-goto-interface "outline-path-completion")
   (setq org-default-notes-file "~/insync/org/capture-desktop.org")
-  (setq org-agenda-files '("~/insync/org"))
+  (setq org-agenda-files (dl93/find-org-file-recursively "~/org" "org"))
+  (setq org-todo-keywords '((sequence "TODO" "NEXT" "IN PROGRESS" "WAITING" "|" "DONE")
+                            (sequence "QUESTION" "|" "ANSWER")))
+  (setq org-enforce-todo-dependencies t)
+  (setq org-clock-persist 'history)
+  (org-clock-persistence-insinuate)
 
   (setq org-capture-templates
         '(("i" "Idea" entry (file+headline "capture-desktop.org" "Ideas")
@@ -196,19 +226,54 @@ you should place your code here."
           ("t" "Task" entry (file+headline "capture-desktop.org" "Tasks")
            "* TODO %? \nCaptured on %T")
           ("l" "Activity log" entry (file+datetree "work-log.org")
+           "* %?\n")
+          ("a" "Agenda entry" entry (file+datetree+prompt "perso-agenda.org")
            "* %?\n")))
 
   (setq org-refile-targets
         '((nil :maxlevel . 9)
           (org-agenda-files :maxlevel . 9)))
 
+  (defvar youtube-iframe
+    (concat "<iframe width=\"440\""
+            " height=\"335\""
+            " src=\"https://www.youtube.com/embed/%s\""
+            " frameborder=\"0\""
+            " allowfullscreen>%s</iframe>"))
+
+
+  ;; (org-add-link-type
+  ;;  "youtube"
+  ;;  (lambda (handle)
+  ;;    (browse-url
+  ;;     (concat "https://www.youtube.com/embed/"
+  ;;             handle)))
+  ;;  (lambda (path desc backend)
+  ;;    (cl-case backend
+  ;;      (html (format yt-iframe-format
+  ;;                    path (or desc "")))
+  ;;      (latex (format "\href{%s}{%s}"
+  ;;                     path (or desc "video"))))))
+
   (let ((insync-dir (concat "file:" (getenv "INSYNC") "/")))
     (setq org-link-abbrev-alist
           (list (cons "insync" insync-dir))))
 
-
   ;; Markdown config
   (setq markdown-command "pandoc")
+
+  ;; Python config
+  (defun dl93/emacs-bug ()
+    (setq python-shell-interpreter "python3")
+    (defun python-shell-completion-native-try ()
+      "Return non-nil if can trigger native completion."
+      (let ((python-shell-completion-native-enable t)
+            (python-shell-completion-native-output-timeout
+             python-shell-completion-native-try-output-timeout))
+        (python-shell-completion-native-get-completions
+         (get-buffer-process (current-buffer))
+         nil "_"))))
+  (add-hook 'python-mode-hook #'dl9/emacs-bug)
 
   (defun dl93/pop-ielm ()
     (interactive)
