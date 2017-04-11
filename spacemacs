@@ -57,6 +57,7 @@ values."
                                       material-theme
                                       oceanic-theme
                                       org-board
+                                      org-brain
                                       reykjavik-theme
                                       writeroom-mode)
    dotspacemacs-excluded-packages '()
@@ -210,15 +211,25 @@ you should place your code here."
             (add-to-list 'org-file-list org-file)))))))
 
   (setq org-directory "~/org")
+  (spacemacs/toggle-mode-line-org-clock-on)
   (setq org-catch-invisible-edits "show")
   (setq org-goto-interface "outline-path-completion")
   (setq org-default-notes-file "~/insync/org/capture-desktop.org")
   (setq org-agenda-files (dl93/find-org-file-recursively "~/org" "org"))
-  (setq org-todo-keywords '((sequence "TODO" "NEXT" "IN PROGRESS" "WAITING" "|" "DONE")
+  (setq org-todo-keywords '((sequence "TODO" "NEXT" "IN PROGRESS" "WAITING" "|" "DONE" "CANCELLED")
                             (sequence "QUESTION" "|" "ANSWER")))
   (setq org-enforce-todo-dependencies t)
   (setq org-clock-persist 'history)
+  (setq org-tags-match-list-sublevels 'indented)
   (org-clock-persistence-insinuate)
+
+  (setq org-agenda-custom-commands
+        '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
+          ("o" "Current project" ((tags-todo "work+TODO=\"IN PROGRESS\"")
+                                  (tags-todo "work+TODO=\"NEXT\"")
+                                  (tags-todo "work+TODO=\"QUESTION\"")
+                                  (tags-todo "work-TODO=\"NEXT\"-TODO=\"QUESTION\"")))
+          ("q" "Questions" todo "QUESTION")))
 
   (setq org-capture-templates
         '(("i" "Idea" entry (file+headline "capture-desktop.org" "Ideas")
@@ -233,6 +244,8 @@ you should place your code here."
   (setq org-refile-targets
         '((nil :maxlevel . 9)
           (org-agenda-files :maxlevel . 9)))
+
+  (setq org-brain-path "~/insync/org/")
 
   (defvar youtube-iframe
     (concat "<iframe width=\"440\""
@@ -273,7 +286,7 @@ you should place your code here."
         (python-shell-completion-native-get-completions
          (get-buffer-process (current-buffer))
          nil "_"))))
-  (add-hook 'python-mode-hook #'dl9/emacs-bug)
+  (add-hook 'python-mode-hook #'dl93/emacs-bug)
 
   (defun dl93/pop-ielm ()
     (interactive)
@@ -289,8 +302,23 @@ you should place your code here."
     (interactive)
     (let ((dot-spacemacs "~/repos/dotfiles/spacemacs"))
       (find-file dot-spacemacs)))
-
   (global-set-key (kbd "<f12>") 'dl93/find-dot-spacemacs)
+
+  (defun bury-compile-buffer-if-successful (buffer string)
+    "Bury a compilation buffer if succeeded without warnings "
+    (if (and
+         (string-match "compilation" (buffer-name buffer))
+         (string-match "finished" string)
+         (not
+          (with-current-buffer buffer
+            (search-forward "warning" nil t))))
+        (run-with-timer 1 nil
+                        (lambda (buf)
+                          (bury-buffer buf)
+                          (switch-to-prev-buffer (get-buffer-window buf) 'kill))
+                        buffer)))
+  (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+
 
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)
