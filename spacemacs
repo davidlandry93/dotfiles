@@ -48,6 +48,7 @@ values."
      )
    dotspacemacs-additional-packages '(abyss-theme
                                       blackboard-theme
+                                      challenger-deep-theme
                                       dokuwiki
                                       dracula-theme
                                       flycheck-package
@@ -59,6 +60,7 @@ values."
                                       org-board
                                       org-brain
                                       reykjavik-theme
+                                      terminal-here
                                       writeroom-mode)
    dotspacemacs-excluded-packages '()
    dotspacemacs-delete-orphan-packages t))
@@ -236,7 +238,7 @@ you should place your code here."
            "* %? \nCaptured on %T")
           ("t" "Task" entry (file+headline "capture-desktop.org" "Tasks")
            "* TODO %? \nCaptured on %T")
-          ("l" "Activity log" entry (file+datetree "work-log.org")
+          ("l" "Activity log" entry (file+datetree "work/log.org")
            "* %?\n")
           ("a" "Agenda entry" entry (file+datetree+prompt "perso-agenda.org")
            "* %?\n")))
@@ -319,11 +321,18 @@ you should place your code here."
                         buffer)))
   (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
+  (defun dl93/external-terminal-command-at-dir (dir)
+    "Command to open an external terminal emulator at the specified directory"
+     (list "gnome-terminal" (concat "--working-directory=" dir)))
 
+  (setq terminal-here-terminal-command 'dl93/external-terminal-command-at-dir)
+
+  (evil-leader/set-key "oc" 'org-clock-goto)
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
   (evil-leader/set-key "ol" 'ace-link)
   (evil-leader/set-key "om" 'toggle-frame-maximized)
   (evil-leader/set-key "od" 'define-word)
+  (evil-leader/set-key "ot" 'terminal-here)
   (evil-leader/set-key "ow" 'writeroom-mode)
   (evil-leader/set-key "w1" 'delete-other-windows)
 
