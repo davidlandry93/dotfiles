@@ -184,6 +184,9 @@ you should place your code here."
 
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
 
+  (setq-default indent-tabs-mode nil)
+  (add-hook 'c-mode-common-hook (lambda () (setq indent-tabs-mode t)))
+
   ;; Org-mode
 
   ;; address an incompatibility between linum and org mode
@@ -230,7 +233,7 @@ you should place your code here."
           ("o" "Current project" ((tags-todo "work+TODO=\"IN PROGRESS\"")
                                   (tags-todo "work+TODO=\"NEXT\"")
                                   (tags-todo "work+TODO=\"QUESTION\"")
-                                  (tags-todo "work-TODO=\"NEXT\"-TODO=\"QUESTION\"")))
+                                  (tags-todo "work-TODO=\"NEXT\"-TODO=\"QUESTION\"-TODO=\"IN PROGRESS\"")))
           ("q" "Questions" todo "QUESTION")))
 
   (setq org-capture-templates
