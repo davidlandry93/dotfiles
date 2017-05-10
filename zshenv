@@ -20,12 +20,6 @@ add_to_path ~/repos/dotfiles
 # For virtualenvwrapper
 export WORKON_HOME="~/.envs/"
 
-# Load ROS distros.
-# Ex. There could be a DL93_ROS_DISTRO=kinetic
-# in the local file.
-if [ ! -z ${DL93_ROS_DISTRO+x} ] ; then
-    source /opt/ros/${DL93_ROS_DISTRO}/setup.zsh
-fi
 
 # PGI specific variables
 if [[ ${DL93_PGI_COMPILER} ]] ; then

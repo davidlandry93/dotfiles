@@ -18,6 +18,7 @@ values."
                       auto-completion-complete-with-key-sequence nil
                       auto-completion-private-snippets-directory "~/repos/snippets/")
      (clojure :variables clojure-enable-fancify-symbols t)
+     csv
      emacs-lisp
      git
      github
@@ -156,6 +157,8 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
+  (add-to-list 'load-path "~/repos/dotfiles/spacemacs/")
+
   (set-default 'truncate-lines t)
 
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
@@ -167,6 +170,8 @@ you should place your code here."
     (lambda ()
       (interactive)
       (LaTeX-insert-environment "align*")))
+  (eval-after-load 'latex
+    '(define-key LaTeX-mode-map (kbd "TAB") 'outline-toggle-children))
 
 
   ;; C/C++ Config
@@ -215,42 +220,8 @@ you should place your code here."
                             org-file-list) ; add files found to result
             (add-to-list 'org-file-list org-file)))))))
 
-  (setq org-directory "~/org")
-  (spacemacs/toggle-mode-line-org-clock-on)
-  (setq org-catch-invisible-edits "show")
-  (setq org-goto-interface "outline-path-completion")
-  (setq org-default-notes-file "~/insync/org/capture-desktop.org")
-  (setq org-agenda-files (dl93/find-org-file-recursively "~/org" "org"))
-  (setq org-todo-keywords '((sequence "TODO" "NEXT" "IN PROGRESS" "WAITING" "|" "DONE" "CANCELLED")
-                            (sequence "QUESTION" "|" "ANSWER")))
-  (setq org-enforce-todo-dependencies t)
-  (setq org-clock-persist 'history)
-  (setq org-tags-match-list-sublevels 'indented)
-  (org-clock-persistence-insinuate)
+  (load "org-config.el")
 
-  (setq org-agenda-custom-commands
-        '(("n" "Agenda and all TODOs" ((agenda "") (alltodo "")))
-          ("o" "Current project" ((tags-todo "work+TODO=\"IN PROGRESS\"")
-                                  (tags-todo "work+TODO=\"NEXT\"")
-                                  (tags-todo "work+TODO=\"QUESTION\"")
-                                  (tags-todo "work-TODO=\"NEXT\"-TODO=\"QUESTION\"-TODO=\"IN PROGRESS\"")))
-          ("q" "Questions" todo "QUESTION")))
-
-  (setq org-capture-templates
-        '(("i" "Idea" entry (file+headline "capture-desktop.org" "Ideas")
-           "* %? \nCaptured on %T")
-          ("t" "Task" entry (file+headline "capture-desktop.org" "Tasks")
-           "* TODO %? \nCaptured on %T")
-          ("l" "Activity log" entry (file+datetree "work/log.org")
-           "* %?\n")
-          ("a" "Agenda entry" entry (file+datetree+prompt "perso-agenda.org")
-           "* %?\n")))
-
-  (setq org-refile-targets
-        '((nil :maxlevel . 9)
-          (org-agenda-files :maxlevel . 9)))
-
-  (setq org-brain-path "~/insync/org/")
 
   (defvar youtube-iframe
     (concat "<iframe width=\"440\""
@@ -305,7 +276,7 @@ you should place your code here."
 
   (defun dl93/find-dot-spacemacs ()
     (interactive)
-    (let ((dot-spacemacs "~/repos/dotfiles/spacemacs"))
+    (let ((dot-spacemacs "~/repos/dotfiles/spacemacs/spacemacs"))
       (find-file dot-spacemacs)))
   (global-set-key (kbd "<f12>") 'dl93/find-dot-spacemacs)
 
@@ -319,16 +290,21 @@ you should place your code here."
             (search-forward "warning" nil t))))
         (run-with-timer 1 nil
                         (lambda (buf)
-                          (bury-buffer buf)
-                          (switch-to-prev-buffer (get-buffer-window buf) 'kill))
-                        buffer)))
-  (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
+                            (bury-buffer buf)
+                            (switch-to-prev-buffer (get-buffer-window buf) 'kill))
+                          buffer)))
+    (add-hook 'compilation-finish-functions 'bury-compile-buffer-if-successful)
 
-  (defun dl93/external-terminal-command-at-dir (dir)
+    (defun dl93/external-terminal-command-at-dir (dir)
     "Command to open an external terminal emulator at the specified directory"
      (list "gnome-terminal" (concat "--working-directory=" dir)))
 
   (setq terminal-here-terminal-command 'dl93/external-terminal-command-at-dir)
+
+  (spacemacs|define-custom-layout "org"
+    :binding "o"
+    :body
+    (find-file "~/org/current.org"))
 
   (evil-leader/set-key "oc" 'org-clock-goto)
   (evil-leader/set-key "oi" 'dl93/pop-ielm)
@@ -341,6 +317,8 @@ you should place your code here."
 
   (evil-leader/set-key "ok" 'move-text-line-up)
   (evil-leader/set-key "oj" 'move-text-line-down)
+
+  (evil-leader/set-key-for-mode 'latex-mode "t" 'reftex-toc)
 
   (eval-after-load 'flycheck '(flycheck-package-setup))
 
