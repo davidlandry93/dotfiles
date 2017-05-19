@@ -170,8 +170,11 @@ you should place your code here."
     (lambda ()
       (interactive)
       (LaTeX-insert-environment "align*")))
+
   (eval-after-load 'latex
     '(define-key LaTeX-mode-map (kbd "TAB") 'outline-toggle-children))
+
+  (add-hook 'TOC-mode-hook 'evil-evilified-state)
 
 
   ;; C/C++ Config
@@ -180,17 +183,21 @@ you should place your code here."
               (setq c-default-style
                   '((java-mode . "java")
                     (awk-mode . "awk")
-                    (other . "cc-mode")))
+                    (c++-mode . "bsd")
+                    (other . "linux")))
               (auto-complete-mode t)))
+
+
   (add-hook 'c++-mode-hook (lambda () (setq flycheck-gcc-language-standard "c++11")))
+  (setq-default c-basic-offset 4
+                tab-width 4)
 
   (c-set-offset (quote cpp-macro) 0 nil)
   (setq-default helm-make-build-dir "build")
 
   (setq ispell-personal-dictionary "~/insync/aspell.en.pws")
 
-  (setq-default indent-tabs-mode nil)
-  (add-hook 'c-mode-common-hook (lambda () (setq indent-tabs-mode t)))
+  (add-hook 'c-mode-common-hook (lambda () (setq indent-tabs-mode nil)))
 
   ;; Org-mode
 

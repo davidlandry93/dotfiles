@@ -6,6 +6,7 @@ autoload add_to_ld_path
 autoload cbcopy
 autoload gitclone
 autoload macd
+autoload grecov
 
 # Configure oh-my-zsh
 export ZSH=~/.oh-my-zsh
