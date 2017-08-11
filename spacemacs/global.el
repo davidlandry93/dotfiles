@@ -16,6 +16,7 @@
     (find-file dot-spacemacs)))
 (global-set-key (kbd "<f12>") 'dl93/find-dot-spacemacs)
 
+(evil-leader/set-key "oc" 'flyspell-correct-word-before-point)
 (evil-leader/set-key "om" 'toggle-frame-maximized)
 (evil-leader/set-key "ot" 'terminal-here)
 (evil-leader/set-key "w1" 'delete-other-windows)

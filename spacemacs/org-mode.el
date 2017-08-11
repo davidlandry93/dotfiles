@@ -23,17 +23,35 @@
 
 (setq org-agenda-files (dl93/find-org-file-recursively "~/org/" "org")
       org-catch-invisible-edits "show"
-      org-default-notes-file "~/org/capture-desktop.org"
+      org-default-notes-file "~/org/inbox.org"
       org-directory "~/org/"
       org-enforce-todo-dependencies t
       org-tags-match-list-sublevels 'indented
-      org-todo-keywords '((sequence "TODO" "IN PROGRESS" "WAITING" | "DONE" "DROPPED")
-                          (sequence "QUESTION" | "ANSWER")))
+      org-todo-keywords '((sequence "TODO" "NEXT" "IN PROGRESS" "WAITING" "|" "DONE" "DROPPED")
+                          (sequence "QUESTION" "|" "ANSWER")))
 
-(setq org-agenda-custom-commands '(("q" "Questions" ((tags-todo "work+TODO=\"QUESTION\"")))))
+(setq org-agenda-custom-commands '(("q" "Questions" ((tags-todo "work+TODO=\"QUESTION\"")))
+                                   ("o" "Current project" ((tags-todo "work+TODO=\"IN PROGRESS\"")
+                                                           (tags-todo "work+TODO=\"NEXT\"")
+                                                           (tags-todo "work+TODO=\"QUESTION\"")
+                                                           (tags-todo "work-TODO=\"NEXT\"-TODO=\"QUESTION\"-TODO=\"IN PROGRESS\"")))))
 
-;; Org-ref
+(setq org-capture-templates
+      '(("t" "Task" entry (file+headline "inbox.org" "Tasks") "* TODO %? \nCaptured on %T")
+        ("n" "Note" entry (file+headline "inbox.org" "Notes") "* %? \nCaptured on %T")))
+
+;; org-ref
 (setq org-ref-default-bibliography '("~/insync/work/bibliography/library.bib")
       org-ref-pdf-directory "~/insync/work/papers/"
       org-ref-bibliography-notes "~/insync/work/bibliography/notes.org")
 
+;; org-index
+(global-set-key (kbd "C-c i") 'org-index)
+(evil-leader/set-key-for-mode 'org-mode "C-i" 'org-index)
+
+;; org-ehtml
+(setq org-ehtml-docroot (expand-file-name "~/public_org")
+      org-ehtml-everything-editable t)
+
+(require 'org-ehtml)
+(ws-start org-ehtml-handler 8888)
