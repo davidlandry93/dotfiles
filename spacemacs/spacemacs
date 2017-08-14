@@ -62,8 +62,6 @@ values."
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
    dotspacemacs-additional-packages '(org-board
-                                      org-ehtml
-                                      org-index
                                       terminal-here)
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -269,7 +267,10 @@ values."
    ;;                       text-mode
    ;;   :size-limit-kb 1000)
    ;; (default nil)
-   dotspacemacs-line-numbers nil
+   dotspacemacs-line-numbers '(:disabled-for-modes
+                               org-mode
+                               markdown-mode
+                               :relative nil)
    ;; Code folding method. Possible values are `evil' and `origami'.
    ;; (default 'evil)
    dotspacemacs-folding-method 'evil
