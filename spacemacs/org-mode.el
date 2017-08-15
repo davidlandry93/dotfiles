@@ -48,10 +48,3 @@
 ;; org-index
 (global-set-key (kbd "C-c i") 'org-index)
 (evil-leader/set-key-for-mode 'org-mode "C-i" 'org-index)
-
-;; org-ehtml
-(setq org-ehtml-docroot (expand-file-name "~/public_org")
-      org-ehtml-everything-editable t)
-
-(require 'org-ehtml)
-(ws-start org-ehtml-handler 8888)
