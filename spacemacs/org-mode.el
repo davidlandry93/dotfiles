@@ -28,7 +28,9 @@
       org-enforce-todo-dependencies t
       org-tags-match-list-sublevels 'indented
       org-todo-keywords '((sequence "TODO" "NEXT" "IN PROGRESS" "WAITING" "|" "DONE" "DROPPED")
-                          (sequence "QUESTION" "|" "ANSWER")))
+                          (sequence "QUESTION" "|" "ANSWER"))
+      org-refile-targets '((nil :maxlevel . 4)
+                           (org-agenda-files :maxlevel . 4)))
 
 (setq org-agenda-custom-commands '(("q" "Questions" ((tags-todo "work+TODO=\"QUESTION\"")))
                                    ("o" "Current project" ((tags-todo "work+TODO=\"IN PROGRESS\"")
@@ -38,7 +40,8 @@
 
 (setq org-capture-templates
       '(("t" "Task" entry (file+headline "inbox.org" "Tasks") "* TODO %? \nCaptured on %T")
-        ("n" "Note" entry (file+headline "inbox.org" "Notes") "* %? \nCaptured on %T")))
+        ("n" "Note" entry (file+headline "inbox.org" "Notes") "* %? \nCaptured on %T")
+        ("w" "Work Journal" entry (file+weektree "work-journal.org") "* %?" :empty-lines 1)))
 
 ;; org-ref
 (setq org-ref-default-bibliography '("~/insync/work/bibliography/library.bib")
