@@ -46,7 +46,12 @@
       org-ref-default-bibliography '("~/insync/work/bibliography/library.bib")
       org-ref-pdf-directory "~/insync/work/papers/")
 
+(defun dl93/org-set-default-pdf-app ()
+  (delete '("\\.pdf\\'" . default) org-file-apps)
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . "evince %s")))
+
 ;; enable various minor modes
 (add-hook 'org-mode-hook (lambda()
+                           (dl93/org-set-default-pdf-app)
                            (org-indent-mode t)
                            (org-sticky-header-mode t)))
