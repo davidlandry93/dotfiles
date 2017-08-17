@@ -21,22 +21,23 @@
                           org-file-list) ; add files found to result
           (add-to-list 'org-file-list org-file)))))))
 
-(setq org-agenda-files (dl93/find-org-file-recursively "~/org/" "org")
+(setq org-agenda-files (dl93/find-org-file-recursively "~/org/")
       org-catch-invisible-edits "show"
       org-default-notes-file "~/org/inbox.org"
       org-directory "~/org/"
       org-enforce-todo-dependencies t
+      org-refile-targets '((org-agenda-files :maxlevel . 4))
       org-tags-match-list-sublevels 'indented
-      org-todo-keywords '((sequence "TODO" "NEXT" "IN PROGRESS" "WAITING" "|" "DONE" "DROPPED")
+      org-todo-keywords '((sequence "BACKLOG" "TODO" "IN PROGRESS" "WAITING" "|" "DONE" "DROPPED")
                           (sequence "QUESTION" "|" "ANSWER"))
       org-refile-targets '((nil :maxlevel . 4)
                            (org-agenda-files :maxlevel . 4)))
 
 (setq org-agenda-custom-commands '(("q" "Questions" ((tags-todo "work+TODO=\"QUESTION\"")))
                                    ("o" "Current project" ((tags-todo "work+TODO=\"IN PROGRESS\"")
-                                                           (tags-todo "work+TODO=\"NEXT\"")
                                                            (tags-todo "work+TODO=\"QUESTION\"")
-                                                           (tags-todo "work-TODO=\"NEXT\"-TODO=\"QUESTION\"-TODO=\"IN PROGRESS\"")))))
+                                                           (tags-todo "work+TODO=\"TODO\"")
+                                                           (tags-todo "work-TODO=\"QUESTION\"-TODO=\"IN PROGRESS\"-TODO=\"TODO\"")))))
 
 (setq org-capture-templates
       '(("t" "Task" entry (file+headline "inbox.org" "Tasks") "* TODO %? \nCaptured on %T")
@@ -44,10 +45,16 @@
         ("w" "Work Journal" entry (file+weektree "work-journal.org") "* %?" :empty-lines 1)))
 
 ;; org-ref
-(setq org-ref-default-bibliography '("~/insync/work/bibliography/library.bib")
-      org-ref-pdf-directory "~/insync/work/papers/"
-      org-ref-bibliography-notes "~/insync/work/bibliography/notes.org")
+(setq org-ref-bibliography-notes "~/insync/work/bibliography/notes.org"
+      org-ref-default-bibliography '("~/insync/work/bibliography/library.bib")
+      org-ref-pdf-directory "~/insync/work/papers/")
 
-;; org-index
-(global-set-key (kbd "C-c i") 'org-index)
-(evil-leader/set-key-for-mode 'org-mode "C-i" 'org-index)
+(defun dl93/org-set-default-pdf-app ()
+  (delete '("\\.pdf\\'" . default) org-file-apps)
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . "evince %s")))
+
+;; enable various minor modes
+(add-hook 'org-mode-hook (lambda()
+                           (dl93/org-set-default-pdf-app)
+                           (org-indent-mode t)
+                           (org-sticky-header-mode t)))
