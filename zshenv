@@ -8,18 +8,19 @@ autoload add_to_path
 autoload add_to_ld_path
 
 # Add libraries to path if available.
+add_to_ld_path "~/local/lib"
 add_to_ld_path "/usr/local/lib"
 add_to_ld_path "/usr/local/arrayfire/lib"
 add_to_ld_path "/usr/local/cuda/lib64"
 add_to_ld_path "/usr/local/cuda/nvvm/lib64"
 
 # Add executables to path if available.
+add_to_path ~/local/bin
 add_to_path ~/.local/bin
 add_to_path ~/repos/dotfiles
 
 # For virtualenvwrapper
 export WORKON_HOME="~/.envs/"
-
 
 # PGI specific variables
 if [[ ${DL93_PGI_COMPILER} ]] ; then
