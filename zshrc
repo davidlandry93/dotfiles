@@ -8,7 +8,7 @@ autoload gitclone
 autoload macd
 autoload grecov
 
-setopt auto_cd
+unsetopt auto_cd
 cdpath=($HOME $HOME/repos)
 
 # Configure oh-my-zsh
