@@ -1,0 +1,65 @@
+#!/usr/bin/env python3
+
+import os
+import pathlib
+import time
+import subprocess
+import sys
+
+REPOS_DIRECTORY = pathlib.Path(os.path.expanduser('~/repos/'))
+REPOS_TO_CHECK =['dotfiles', 'spacemacs-config']
+LAST_CHECK_PATH = pathlib.Path(os.path.expanduser('~/repos/.last_time_checked'))
+TIME_BETWEEN_CHECKS = 24 * 60 * 60
+
+
+def pull_new_commits(repo):
+    response = subprocess.run(['git', 'pull'], cwd=str(repo), stdout=subprocess.PIPE)
+    print(response)
+
+
+def has_new_commits(repo):
+    subprocess.run(['git', 'remote', 'update'])
+    response = subprocess.run(['git', 'rev-list', 'HEAD..origin/master', '--count'], stdout=subprocess.PIPE, cwd=str(repo))
+
+    return int(response.stdout) > 0
+
+
+def check_repos():
+    for repo in REPOS_TO_CHECK:
+        print('Checking repo {}'.format(repo))
+        if has_new_commits(REPOS_DIRECTORY / repo):
+            try:
+                pull_new_commits(repos)
+            except RuntimeError:
+                print('Could not fetch new changes in repo {}'.format(repo))
+
+
+def time_last_checked():
+    last_check_time = 0
+
+    if LAST_CHECK_PATH.is_file():
+        with LAST_CHECK_PATH.open() as last_check_file:
+            last_check_time = int(last_check_file.readline())
+
+    return last_check_time
+
+
+def offer_to_check():
+    user_response = input("Check if there were updates in github repos? [Y/n]").lower()
+
+    write_check_time(LAST_CHECK_PATH)
+
+    return user_response in ['y', '']
+
+
+def write_check_time(filepath):
+    with LAST_CHECK_PATH.open('w') as last_check_file:
+        last_check_file.write(str(int(time.time())) + '\n')
+
+
+
+if __name__ == '__main__':
+
+    if time.time() - time_last_checked() > TIME_BETWEEN_CHECKS and offer_to_check():
+        check_repos()
+
