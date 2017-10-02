@@ -22,6 +22,8 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
+python3 check_repos
+
 # Source virtualenvwrapper if it exists.
 VIRTUALENVWRAPPER_DEFAULT_PATH=/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh
 if [[ -f ${DL93_VIRTUALENVWRAPPER_PATH:-$VIRTUALENVWRAPPER_DEFAULT_PATH} ]]; then
