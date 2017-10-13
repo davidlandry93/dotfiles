@@ -14,11 +14,11 @@ TIME_BETWEEN_CHECKS = 24 * 60 * 60
 
 def pull_new_commits(repo):
     response = subprocess.run(['git', 'pull'], cwd=str(repo), stdout=subprocess.PIPE)
-    print(response)
+    print(response.stdout)
 
 
 def has_new_commits(repo):
-    subprocess.run(['git', 'remote', 'update'])
+    subprocess.run(['git', 'remote', 'update'], cwd=str(repo))
     response = subprocess.run(['git', 'rev-list', 'HEAD..origin/master', '--count'], stdout=subprocess.PIPE, cwd=str(repo))
 
     return int(response.stdout) > 0
@@ -27,9 +27,11 @@ def has_new_commits(repo):
 def check_repos():
     for repo in REPOS_TO_CHECK:
         print('Checking repo {}'.format(repo))
-        if has_new_commits(REPOS_DIRECTORY / repo):
+
+        repo_path = REPOS_DIRECTORY / repo
+        if has_new_commits(repo_path):
             try:
-                pull_new_commits(repos)
+                pull_new_commits(repo_path)
             except RuntimeError:
                 print('Could not fetch new changes in repo {}'.format(repo))
 
