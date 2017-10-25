@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import multiprocessing
 import pathlib
 import time
 import subprocess
@@ -23,17 +24,21 @@ def has_new_commits(repo):
 
     return int(response.stdout) > 0
 
+def check_repo(repo_name):
+    print('Checking repo {}'.format(repo_name))
+
+    repo_path = REPOS_DIRECTORY / repo_name
+    if has_new_commits(repo_path):
+        try:
+            pull_new_commits(repo_path)
+        except RuntimeError:
+            print('Could not fetch new changes in repo {}'.format(repo_name))
+
+
 
 def check_repos():
-    for repo in REPOS_TO_CHECK:
-        print('Checking repo {}'.format(repo))
-
-        repo_path = REPOS_DIRECTORY / repo
-        if has_new_commits(repo_path):
-            try:
-                pull_new_commits(repo_path)
-            except RuntimeError:
-                print('Could not fetch new changes in repo {}'.format(repo))
+    with multiprocessing.Pool() as pool:
+        pool.map(check_repo, REPOS_TO_CHECK, chunksize=1)
 
 
 def time_last_checked():
@@ -51,7 +56,7 @@ def offer_to_check():
 
     write_check_time(LAST_CHECK_PATH)
 
-    return user_response in ['y', '']
+    return user_response.lower() in ['y', '']
 
 
 def write_check_time(filepath):
