@@ -1,0 +1,4 @@
+#compdef recov_plot
+local -a plot_names
+plot_names=('cov_on_density' 'dodo_on_density')
+_describe 'recov_plot' plot_names
