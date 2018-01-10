@@ -22,7 +22,7 @@ plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
 
-python3 $HOME/repos/dotfiles/check_repos
+python3 $HOME/repos/dotfiles/check_repos $DL93_REPOS_TO_UPDATE
 
 # Source virtualenvwrapper if it exists.
 VIRTUALENVWRAPPER_DEFAULT_PATH=/usr/share/virtualenvwrapper/virtualenvwrapper_lazy.sh
