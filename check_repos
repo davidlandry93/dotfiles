@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 REPOS_DIRECTORY = pathlib.Path(os.path.expanduser('~/repos/'))
-DEFAULT_REPOS_TO_CHECK =['dotfiles', 'spacemacs-config']
+DEFAULT_REPOS_TO_CHECK =['dotfiles', 'spacemacs-config', 'snippets']
 LAST_CHECK_PATH = pathlib.Path(os.path.expanduser('~/repos/.last_time_checked'))
 TIME_BETWEEN_CHECKS = 24 * 60 * 60
 

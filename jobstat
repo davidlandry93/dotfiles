@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+alias jobstat="sacct -X -ojobid,jobname,user,Elapsed,state -S 2017-11-01"
