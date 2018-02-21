@@ -8,6 +8,7 @@ autoload gitclone
 autoload macd
 autoload grecov
 autoload jobstat
+autoload rmkcd
 
 unsetopt auto_cd
 cdpath=($HOME $HOME/repos)

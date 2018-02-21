@@ -1,0 +1,3 @@
+#!/usr/bin/env zsh
+
+rm -r $1 && mkdir $1 && cd $1
