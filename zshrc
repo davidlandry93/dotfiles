@@ -1,14 +1,7 @@
 #!/usr/bin/env zsh
 
 # Load my custom functions
-autoload add_to_path
-autoload add_to_ld_path
-autoload cbcopy
-autoload gitclone
-autoload macd
-autoload grecov
-autoload jobstat
-autoload rmkcd
+autoload add_to_path add_to_ld_path cbcopy gitclone grecov jobstat lcmake macd rmkcd
 
 unsetopt auto_cd
 cdpath=($HOME $HOME/repos)

@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+# Local cmake, cmake that builds in the local directory.
+
+cmake -DCMAKE_PREFIX_PATH=$DL93_LOCAL -DCMAKE_INSTALL_PREFIX=$DL93_LOCAL "$@"

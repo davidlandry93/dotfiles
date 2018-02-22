@@ -17,10 +17,12 @@ add_to_ld_path "/usr/local/cuda/nvvm/lib64"
 # Add executables to path if available.
 add_to_path ~/local/bin
 add_to_path ~/.local/bin
-add_to_path ~/repos/dotfiles
+add_to_path ~/repos/dotfiles/bin
 
 # For virtualenvwrapper
 export WORKON_HOME="~/.envs/"
+
+export DL93_LOCAL=$HOME/local
 
 # PGI specific variables
 if [[ ${DL93_PGI_COMPILER} ]] ; then
