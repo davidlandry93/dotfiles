@@ -12,7 +12,7 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME="afowler"
 COMPLETION_WAITING_DOTS="true"
 
-plugins=(git)
+plugins=(git fasd)
 
 
 source $ZSH/oh-my-zsh.sh

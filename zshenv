@@ -18,6 +18,7 @@ add_to_ld_path "/usr/local/cuda/nvvm/lib64"
 add_to_path ~/local/bin
 add_to_path ~/.local/bin
 add_to_path ~/repos/dotfiles/bin
+# add_to_path ~/anaconda3/bin
 
 # For virtualenvwrapper
 export WORKON_HOME="~/.envs/"

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+DIFF_FILE=.to_send.diff
+
+git diff > $DIFF_FILE &&
+scp $DIFF_FILE $1 &&
+ssh $1 -c git apply .to_send.diff
