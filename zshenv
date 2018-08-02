@@ -8,7 +8,7 @@ autoload add_to_path
 autoload add_to_ld_path
 
 # Add libraries to path if available.
-add_to_ld_path "~/local/lib"
+add_to_ld_path "$HOME/local/lib"
 add_to_ld_path "/usr/local/lib"
 add_to_ld_path "/usr/local/arrayfire/lib"
 add_to_ld_path "/usr/local/cuda/lib64"
